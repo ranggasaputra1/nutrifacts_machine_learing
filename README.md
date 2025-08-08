@@ -1,32 +1,40 @@
 # Nutrifacts ML
-This repository is the Capstone Project in [Bangkit Academy](https://grow.google/intl/id_id/bangkit/?tab=machine-learning) 2023. By applying machine learning techniques in Nutrifacts, we can construct a model that estimates food grade from nutritional information.
 
-![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg) 
+Nutrifacts Machine Learning
 
-This repository contains the code and documentation for a machine learning model that predicts food grade based on nutritional information. The model is designed to help individuals make more informed choices about their food intake.
+![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)
 
-## Overview
+Repositori ini berisi kode dan dokumentasi untuk model _machine learning_ yang memprediksi grade makanan berdasarkan informasi nutrisi. Model ini dirancang untuk membantu individu membuat pilihan yang lebih tepat tentang asupan makanan mereka.
 
-This project utilizes a linear Support Vector Machine (SVM) to predict food grade based on the following nutritional features:
+## Ringkasan Proyek
 
-- Calories
-- Proteins
-- Fat
-- Carbohydrates
+Proyek ini menggunakan **Support Vector Machine (SVM) dengan kernel Radial Basis Function (RBF)** untuk memprediksi grade makanan. Model ini dioptimalkan menggunakan **GridSearchCV** untuk menemukan _hyperparameter_ terbaik, sehingga mencapai performa maksimal.
 
-The model was trained on a dataset of food items with corresponding nutritional information and assigned food grades.
+Model ini dilatih menggunakan fitur-fitur nutrisi berikut:
 
-## Installation
+- calories
+- proteins
+- fat
+- carbohydrate
 
-1. Clone Repository
+Model ini mencapai akurasi **94.06%** pada data uji, menjadikannya sangat andal untuk tugas klasifikasi.
+
+## Instalasi
+
+1. Klon Repositori
+
 ```sh
 git clone https://github.com/dzakyadlh/nutrifacts-ml.git
 ```
-2. Install Library
+
+2. Instal Pustaka
+
 ```sh
 pip install -r requirements.txt
 ```
-Library:
+
+**Pustaka yang dibutuhkan:**
+
 - numpy
 - pandas
 - seaborn
@@ -34,42 +42,43 @@ Library:
 - scikit-learn
 - joblib
 
-Example How to use Model:
-```sh
+## Contoh Penggunaan Model untuk Prediksi
+
+```python
 import numpy as np
 from joblib import load
 
-# Load the model
+# Memuat model dan scaler yang sudah terlatih
 model = load('svm_model_linear.joblib')
+scaler = load('scaler.joblib')
 
-# Prepare input data
-input_data = np.array([[150, 5, 8, 25]])
+# Siapkan data input (urutan dan nilai harus sesuai)
+# Contoh data: 100 kalori, 5g protein, 8g lemak, 25g karbohidrat
+input_data = np.array([[100, 5, 8, 25]])
 
-# Make a prediction
-prediction = model.predict(input_data)
+# Lakukan penskalaan pada data input, sama seperti saat model dilatih
+input_data_scaled = scaler.transform(input_data)
+
+# Lakukan prediksi
+prediction = model.predict(input_data_scaled)
 
 print(prediction)
 ```
-Input data must be a NumPy array with 4 dimensions, with the following feature order:
-- calories
-- proteins
-- fat
-- carbohydrate
 
-## Features
+**Urutan fitur pada input data:**
 
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
+1. calories
+2. proteins
+3. fat
+4. carbohydrate
 
-| Features | Function |
-| ------ | ------ |
-| Numpy | Provides efficient numerical computations with multi-dimensional arrays and matrices. |
-| Pandas | Offers high-performance data structures and tools for data analysis and manipulation. |
-| Seaborn | A high-level Python visualization library built on Matplotlib, specializing in statistical plots. |
-| Matplotlib | A comprehensive Python plotting library for creating static, animated, and interactive visualizations. |
-| Scikit-learn | A powerful machine learning library with a wide range of algorithms for supervised and unsupervised learning. |
-| Joblib | A Python library for efficient serialization and persistence of Python objects, often used for saving and loading machine learning models. |
+## Pustaka yang Digunakan
 
-## License
-
-MIT
+| Pustaka      | Fungsi                                                                                                                                          |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Numpy        | Menyediakan komputasi numerik yang efisien dengan array dan matriks multi-dimensi.                                                              |
+| Pandas       | Menawarkan struktur data berkinerja tinggi dan alat untuk analisis serta manipulasi data.                                                       |
+| Seaborn      | Sebuah pustaka visualisasi Python tingkat tinggi yang dibangun di atas Matplotlib, khusus untuk plot statistik.                                 |
+| Matplotlib   | Pustaka plotting Python yang komprehensif untuk membuat visualisasi statis, animasi, dan interaktif.                                            |
+| Scikit-learn | Pustaka machine learning yang kuat dengan berbagai algoritma untuk supervised dan unsupervised learning.                                        |
+| Joblib       | Pustaka Python untuk serialisasi dan persistensi objek Python yang efisien, sering digunakan untuk menyimpan dan memuat model machine learning. |
